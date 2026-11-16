@@ -19,4 +19,5 @@ export interface PaymentSearchParams {
   page: number;
   pageSize: number;
   search?: string;
+  currency?: string;
 }

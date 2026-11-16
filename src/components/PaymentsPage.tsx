@@ -25,18 +25,21 @@ const getErrorMessage = (error: unknown): string | null => {
 export const PaymentsPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [submittedSearchQuery, setSubmittedSearchQuery] = useState("");
+  const [currency, setCurrency] = useState("");
   const { data, error, isFetching } = usePayments({
     page: DEFAULT_PAGE,
     pageSize: PAGE_SIZE,
     search: submittedSearchQuery,
+    currency,
   });
 
-  const hasActiveFilters = !!submittedSearchQuery;
+  const hasActiveFilters = !!submittedSearchQuery || !!currency;
   const errorMessage = getErrorMessage(error);
 
   const clearFilters = () => {
     setSearchQuery("");
     setSubmittedSearchQuery("");
+    setCurrency("");
   };
 
   return (
@@ -46,6 +49,8 @@ export const PaymentsPage = () => {
         value={searchQuery}
         onChange={setSearchQuery}
         onSearch={setSubmittedSearchQuery}
+        currency={currency}
+        onCurrencyChange={setCurrency}
         isClearable={hasActiveFilters}
         onClear={clearFilters}
       />
