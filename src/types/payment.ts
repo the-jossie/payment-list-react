@@ -7,6 +7,9 @@ export interface Payment {
   currency?: string | null;
   status: PaymentStatus;
   date: string;
+  customerAddress?: string | null;
+  description?: string | null;
+  clientId?: string | null;
 }
 
 export interface PaymentSearchResponse {
