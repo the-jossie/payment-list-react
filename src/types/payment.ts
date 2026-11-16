@@ -15,9 +15,14 @@ export interface PaymentSearchResponse {
   pageSize: number;
 }
 
-export interface PaymentSearchParams {
+export interface PaymentFilters {
+  search: string;
+  currency: string;
+}
+
+export interface PaginationParams {
   page: number;
   pageSize: number;
-  search?: string;
-  currency?: string;
 }
+
+export type PaymentSearchParams = PaginationParams & Partial<PaymentFilters>;
