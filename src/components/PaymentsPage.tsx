@@ -9,21 +9,32 @@ const DEFAULT_PAGE = 1;
 const PAGE_SIZE = 5;
 
 export const PaymentsPage = () => {
-  const [search, setSearch] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [submittedSearchQuery, setSubmittedSearchQuery] = useState("");
   const { data, isFetching } = usePayments({
     page: DEFAULT_PAGE,
     pageSize: PAGE_SIZE,
-    search: search || undefined,
+    search: submittedSearchQuery,
   });
+
+  const hasActiveFilters = !!submittedSearchQuery;
+
+  const clearFilters = () => {
+    setSearchQuery("");
+    setSubmittedSearchQuery("");
+  };
 
   return (
     <Container>
       <Title>{I18N.PAGE_TITLE}</Title>
-      <PaymentsSearch onSearch={setSearch} />
-      <PaymentsTable
-        payments={data?.payments ?? []}
-        isLoading={isFetching}
+      <PaymentsSearch
+        value={searchQuery}
+        onChange={setSearchQuery}
+        onSearch={setSubmittedSearchQuery}
+        isClearable={hasActiveFilters}
+        onClear={clearFilters}
       />
+      <PaymentsTable payments={data?.payments ?? []} isLoading={isFetching} />
     </Container>
   );
 };
