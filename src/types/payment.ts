@@ -1,4 +1,9 @@
-export type PaymentStatus = "completed" | "pending" | "failed" | "refunded" | string;
+export const PAYMENT_STATUSES = ["completed", "pending", "failed", "refunded"] as const;
+
+export type PaymentStatus = (typeof PAYMENT_STATUSES)[number];
+
+export const isPaymentStatus = (value: string): value is PaymentStatus =>
+  (PAYMENT_STATUSES as readonly string[]).includes(value);
 
 export interface Payment {
   id: string;

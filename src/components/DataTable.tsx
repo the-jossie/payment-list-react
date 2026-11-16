@@ -1,5 +1,6 @@
 import { Key, ReactNode } from "react";
 import {
+  EmptyBox,
   TableWrapper,
   Table,
   TableHeaderWrapper,
@@ -29,6 +30,7 @@ interface DataTableProps<T> {
   rows: T[];
   getRowKey: (row: T) => Key;
   isLoading?: boolean;
+  emptyMessage?: ReactNode;
   pagination?: TablePagination;
 }
 
@@ -37,6 +39,7 @@ export const DataTable = <T,>({
   rows,
   getRowKey,
   isLoading = false,
+  emptyMessage,
   pagination,
 }: DataTableProps<T>) => (
   <TableWrapper>
@@ -51,6 +54,13 @@ export const DataTable = <T,>({
         </TableHeaderRow>
       </TableHeaderWrapper>
       <TableBodyWrapper>
+        {rows.length === 0 && !isLoading && emptyMessage && (
+          <tr>
+            <td colSpan={columns.length}>
+              <EmptyBox>{emptyMessage}</EmptyBox>
+            </td>
+          </tr>
+        )}
         {rows.map((row) => (
           <TableRow key={getRowKey(row)}>
             {columns.map((column) => (

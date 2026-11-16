@@ -1,7 +1,7 @@
 import { I18N } from "../constants/i18n";
 import { Payment } from "../types/payment";
 import { formatAmount, formatDate } from "../utils/format";
-import { StatusBadge } from "./components";
+import { PaymentStatusBadge } from "./PaymentStatusBadge";
 import { TableColumn, DataTable, TablePagination } from "./DataTable";
 
 interface PaymentsTableProps {
@@ -35,7 +35,7 @@ const PAYMENT_COLUMNS: TableColumn<Payment>[] = [
   {
     key: "status",
     value: I18N.TABLE_HEADER_STATUS,
-    render: (p) => <StatusBadge status={p.status}>{p.status}</StatusBadge>,
+    render: (p) => <PaymentStatusBadge status={p.status} />,
   },
 ];
 
@@ -49,6 +49,7 @@ export const PaymentsTable = ({
     rows={payments}
     getRowKey={(p) => p.id}
     isLoading={isLoading}
+    emptyMessage={I18N.NO_PAYMENTS_FOUND}
     pagination={pagination}
   />
 );

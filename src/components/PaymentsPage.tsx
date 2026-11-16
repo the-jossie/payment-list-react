@@ -15,8 +15,8 @@ const INITIAL_FILTERS: PaymentFilters = {
   currency: "",
 };
 
-const getErrorMessage = (error: unknown): string | null => {
-  if (!isAxiosError(error)) return null;
+const getErrorMessage = (error: unknown): string => {
+  if (!isAxiosError(error)) return I18N.SOMETHING_WENT_WRONG;
 
   switch (error.response?.status) {
     case HttpStatusCode.NotFound:
@@ -24,7 +24,7 @@ const getErrorMessage = (error: unknown): string | null => {
     case HttpStatusCode.InternalServerError:
       return I18N.INTERNAL_SERVER_ERROR;
     default:
-      return null;
+      return I18N.SOMETHING_WENT_WRONG;
   }
 };
 
@@ -39,7 +39,7 @@ export const PaymentsPage = () => {
   });
 
   const hasActiveFilters = Object.values(filters).some(Boolean);
-  const errorMessage = getErrorMessage(error);
+  const errorMessage = error ? getErrorMessage(error) : null;
 
   const updateFilters = (changes: Partial<PaymentFilters>) => {
     setFilters((current) => ({ ...current, ...changes }));
