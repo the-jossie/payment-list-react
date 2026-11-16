@@ -1,5 +1,5 @@
-import { isPaymentStatus, PaymentStatus } from "../types/payment";
-import { BadgeTone, StatusBadge } from "./components";
+import { isPaymentStatus, PaymentStatus } from "../types";
+import { BadgeTone, StatusBadge } from "../../../shared/ui/styles";
 
 const STATUS_TONES: Record<PaymentStatus, BadgeTone> = {
   completed: "success",

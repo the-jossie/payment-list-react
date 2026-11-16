@@ -7,6 +7,7 @@ export const I18N = {
 
   // Search and filter labels
   SEARCH_PLACEHOLDER: "Enter payment ID",
+  SEARCH_TOO_LONG: "Search must be 100 characters or fewer.",
   SEARCH_LABEL: "Search payments",
   CURRENCY_FILTER_LABEL: "Filter by currency",
 
