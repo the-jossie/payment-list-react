@@ -9,6 +9,19 @@ import { PaymentsTable } from "./PaymentsTable";
 const DEFAULT_PAGE = 1;
 const PAGE_SIZE = 5;
 
+const getErrorMessage = (error: unknown): string | null => {
+  if (!isAxiosError(error)) return null;
+
+  switch (error.response?.status) {
+    case HttpStatusCode.NotFound:
+      return I18N.PAYMENT_NOT_FOUND;
+    case HttpStatusCode.InternalServerError:
+      return I18N.INTERNAL_SERVER_ERROR;
+    default:
+      return null;
+  }
+};
+
 export const PaymentsPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [submittedSearchQuery, setSubmittedSearchQuery] = useState("");
@@ -19,8 +32,7 @@ export const PaymentsPage = () => {
   });
 
   const hasActiveFilters = !!submittedSearchQuery;
-  const isNotFoundError =
-    isAxiosError(error) && error.response?.status === HttpStatusCode.NotFound;
+  const errorMessage = getErrorMessage(error);
 
   const clearFilters = () => {
     setSearchQuery("");
@@ -37,8 +49,8 @@ export const PaymentsPage = () => {
         isClearable={hasActiveFilters}
         onClear={clearFilters}
       />
-      {isNotFoundError ? (
-        <ErrorBox role="alert">{I18N.PAYMENT_NOT_FOUND}</ErrorBox>
+      {errorMessage ? (
+        <ErrorBox role="alert">{errorMessage}</ErrorBox>
       ) : (
         <PaymentsTable payments={data?.payments ?? []} isLoading={isFetching} />
       )}
