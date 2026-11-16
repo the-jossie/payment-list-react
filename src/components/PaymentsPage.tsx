@@ -31,8 +31,9 @@ const getErrorMessage = (error: unknown): string | null => {
 export const PaymentsPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [filters, setFilters] = useState<PaymentFilters>(INITIAL_FILTERS);
+  const [page, setPage] = useState(DEFAULT_PAGE);
   const { data, error, isFetching } = usePayments({
-    page: DEFAULT_PAGE,
+    page,
     pageSize: PAGE_SIZE,
     ...filters,
   });
@@ -40,12 +41,15 @@ export const PaymentsPage = () => {
   const hasActiveFilters = Object.values(filters).some(Boolean);
   const errorMessage = getErrorMessage(error);
 
-  const updateFilters = (changes: Partial<PaymentFilters>) =>
+  const updateFilters = (changes: Partial<PaymentFilters>) => {
     setFilters((current) => ({ ...current, ...changes }));
+    setPage(DEFAULT_PAGE);
+  };
 
   const clearFilters = () => {
     setSearchQuery("");
     setFilters(INITIAL_FILTERS);
+    setPage(DEFAULT_PAGE);
   };
 
   return (
@@ -62,7 +66,16 @@ export const PaymentsPage = () => {
       {errorMessage ? (
         <ErrorBox role="alert">{errorMessage}</ErrorBox>
       ) : (
-        <PaymentsTable payments={data?.payments ?? []} isLoading={isFetching} />
+        <PaymentsTable
+          payments={data?.payments ?? []}
+          isLoading={isFetching}
+          pagination={{
+            page,
+            pageSize: PAGE_SIZE,
+            total: data?.total ?? 0,
+            onPageChange: setPage,
+          }}
+        />
       )}
     </Container>
   );

@@ -9,6 +9,7 @@ import {
   TableRow,
   TableCell,
 } from "./components";
+import { Pagination } from "./Pagination";
 
 export interface TableColumn<T> {
   key: string;
@@ -16,11 +17,19 @@ export interface TableColumn<T> {
   render: (row: T) => ReactNode;
 }
 
+export interface TablePagination {
+  page: number;
+  pageSize: number;
+  total: number;
+  onPageChange: (page: number) => void;
+}
+
 interface DataTableProps<T> {
   columns: TableColumn<T>[];
   rows: T[];
   getRowKey: (row: T) => Key;
   isLoading?: boolean;
+  pagination?: TablePagination;
 }
 
 export const DataTable = <T,>({
@@ -28,6 +37,7 @@ export const DataTable = <T,>({
   rows,
   getRowKey,
   isLoading = false,
+  pagination,
 }: DataTableProps<T>) => (
   <TableWrapper>
     <Table aria-busy={isLoading}>
@@ -52,5 +62,12 @@ export const DataTable = <T,>({
         ))}
       </TableBodyWrapper>
     </Table>
+    {pagination && (
+      <Pagination
+        page={pagination.page}
+        onPageChange={pagination.onPageChange}
+        isNextDisabled={pagination.page * pagination.pageSize >= pagination.total}
+      />
+    )}
   </TableWrapper>
 );

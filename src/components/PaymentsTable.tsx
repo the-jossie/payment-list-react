@@ -2,11 +2,12 @@ import { I18N } from "../constants/i18n";
 import { Payment } from "../types/payment";
 import { formatAmount, formatDate } from "../utils/format";
 import { StatusBadge } from "./components";
-import { TableColumn, DataTable } from "./DataTable";
+import { TableColumn, DataTable, TablePagination } from "./DataTable";
 
 interface PaymentsTableProps {
   payments: Payment[];
   isLoading?: boolean;
+  pagination?: TablePagination;
 }
 
 const PAYMENT_COLUMNS: TableColumn<Payment>[] = [
@@ -38,11 +39,16 @@ const PAYMENT_COLUMNS: TableColumn<Payment>[] = [
   },
 ];
 
-export const PaymentsTable = ({ payments, isLoading }: PaymentsTableProps) => (
+export const PaymentsTable = ({
+  payments,
+  isLoading,
+  pagination,
+}: PaymentsTableProps) => (
   <DataTable
     columns={PAYMENT_COLUMNS}
     rows={payments}
     getRowKey={(p) => p.id}
     isLoading={isLoading}
+    pagination={pagination}
   />
 );
