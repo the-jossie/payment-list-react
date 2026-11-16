@@ -1,5 +1,5 @@
-import { I18N } from "../constants/i18n";
-import { PaginationButton, PaginationRow } from "./components";
+import { I18N } from "../../constants/i18n";
+import { PaginationButton, PaginationRow } from "./styles";
 
 interface PaginationProps {
   page: number;

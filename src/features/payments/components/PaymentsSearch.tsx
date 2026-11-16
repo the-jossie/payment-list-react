@@ -1,14 +1,14 @@
 import { FormEvent } from "react";
 import { CURRENCIES } from "../constants";
-import { I18N } from "../constants/i18n";
-import { PaymentFilters } from "../types/payment";
+import { I18N } from "../../../constants/i18n";
+import { PaymentFilters } from "../types";
 import {
   ClearButton,
   FilterRow,
   SearchButton,
   SearchInput,
   Select,
-} from "./components";
+} from "../../../shared/ui/styles";
 
 interface PaymentsSearchProps {
   searchQuery: string;

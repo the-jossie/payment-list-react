@@ -1,4 +1,4 @@
-export const PAYMENT_STATUSES = ["completed", "pending", "failed", "refunded"] as const;
+import { PAYMENT_STATUSES } from "./constants";
 
 export type PaymentStatus = (typeof PAYMENT_STATUSES)[number];
 

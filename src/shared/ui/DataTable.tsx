@@ -11,8 +11,8 @@ import {
   TableBodyWrapper,
   TableRow,
   TableCell,
-} from "./components";
-import { I18N } from "../constants/i18n";
+} from "./styles";
+import { I18N } from "../../constants/i18n";
 import { Pagination } from "./Pagination";
 
 export interface TableColumn<T> {
