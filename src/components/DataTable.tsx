@@ -3,6 +3,7 @@ import {
   EmptyBox,
   Spinner,
   TableWrapper,
+  TableScroll,
   Table,
   TableHeaderWrapper,
   TableHeaderRow,
@@ -62,34 +63,38 @@ export const DataTable = <T,>({
 
   return (
     <TableWrapper>
-      <Table aria-busy={isLoading}>
-        <TableHeaderWrapper>
-          <TableHeaderRow>
-            {columns.map((column) => (
-              <TableHeader key={column.key} scope="col">
-                {column.value}
-              </TableHeader>
-            ))}
-          </TableHeaderRow>
-        </TableHeaderWrapper>
-        <TableBodyWrapper>
-          {rows.map((row) => (
-            <TableRow key={getRowKey(row)}>
+      <TableScroll>
+        <Table aria-busy={isLoading}>
+          <TableHeaderWrapper>
+            <TableHeaderRow>
               {columns.map((column) => (
-                <TableCell key={`cell-${getRowKey(row)}-${column.key}`}>
-                  {column.render(row)}
-                </TableCell>
+                <TableHeader key={column.key} scope="col">
+                  {column.value}
+                </TableHeader>
               ))}
-            </TableRow>
-          ))}
-        </TableBodyWrapper>
-      </Table>
+            </TableHeaderRow>
+          </TableHeaderWrapper>
+          <TableBodyWrapper>
+            {rows.map((row) => (
+              <TableRow key={getRowKey(row)}>
+                {columns.map((column) => (
+                  <TableCell key={`cell-${getRowKey(row)}-${column.key}`}>
+                    {column.render(row)}
+                  </TableCell>
+                ))}
+              </TableRow>
+            ))}
+          </TableBodyWrapper>
+        </Table>
+      </TableScroll>
       {renderState()}
       {pagination && (
         <Pagination
           page={pagination.page}
           onPageChange={pagination.onPageChange}
-          isNextDisabled={pagination.page * pagination.pageSize >= pagination.total}
+          isNextDisabled={
+            pagination.page * pagination.pageSize >= pagination.total
+          }
         />
       )}
     </TableWrapper>

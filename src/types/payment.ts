@@ -1,5 +1,3 @@
-import { Currency } from "../constants";
-
 export const PAYMENT_STATUSES = ["completed", "pending", "failed", "refunded"] as const;
 
 export type PaymentStatus = (typeof PAYMENT_STATUSES)[number];
@@ -28,7 +26,7 @@ export interface PaymentSearchResponse {
 
 export interface PaymentFilters {
   search: string;
-  currency: Currency;
+  currency: string;
 }
 
 export interface PaginationParams {
