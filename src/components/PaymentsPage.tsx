@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { HttpStatusCode, isAxiosError } from "axios";
 import { I18N } from "../constants/i18n";
 import { usePayments } from "../hooks/usePayments";
 import { PaymentFilters } from "../types/payment";
+import { ApiErrorType } from "../types/error";
 import { Container, ErrorBox, Title } from "./components";
 import { PaymentsSearch } from "./PaymentsSearch";
 import { PaymentsTable } from "./PaymentsTable";
@@ -15,17 +15,10 @@ const INITIAL_FILTERS: PaymentFilters = {
   currency: "",
 };
 
-const getErrorMessage = (error: unknown): string => {
-  if (!isAxiosError(error)) return I18N.SOMETHING_WENT_WRONG;
-
-  switch (error.response?.status) {
-    case HttpStatusCode.NotFound:
-      return I18N.PAYMENT_NOT_FOUND;
-    case HttpStatusCode.InternalServerError:
-      return I18N.INTERNAL_SERVER_ERROR;
-    default:
-      return I18N.SOMETHING_WENT_WRONG;
-  }
+const ERROR_MESSAGES: Record<ApiErrorType, string> = {
+  "not-found": I18N.PAYMENT_NOT_FOUND,
+  server: I18N.INTERNAL_SERVER_ERROR,
+  unknown: I18N.SOMETHING_WENT_WRONG,
 };
 
 export const PaymentsPage = () => {
@@ -39,7 +32,7 @@ export const PaymentsPage = () => {
   });
 
   const hasActiveFilters = Object.values(filters).some(Boolean);
-  const errorMessage = error ? getErrorMessage(error) : null;
+  const errorMessage = error ? ERROR_MESSAGES[error.type] : null;
 
   const updateFilters = (changes: Partial<PaymentFilters>) => {
     setFilters((current) => ({ ...current, ...changes }));
