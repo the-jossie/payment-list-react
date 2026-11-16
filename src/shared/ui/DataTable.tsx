@@ -13,19 +13,12 @@ import {
   TableCell,
 } from "./styles";
 import { I18N } from "../../constants/i18n";
-import { Pagination } from "./Pagination";
+import { Pagination, PaginationProps } from "./Pagination";
 
 export interface TableColumn<T> {
   key: string;
   value: ReactNode;
   render: (row: T) => ReactNode;
-}
-
-export interface TablePagination {
-  page: number;
-  pageSize: number;
-  total: number;
-  onPageChange: (page: number) => void;
 }
 
 interface DataTableProps<T> {
@@ -34,7 +27,7 @@ interface DataTableProps<T> {
   getRowKey: (row: T) => Key;
   isLoading?: boolean;
   emptyMessage?: ReactNode;
-  pagination?: TablePagination;
+  pagination?: PaginationProps;
 }
 
 export const DataTable = <T,>({
@@ -88,15 +81,7 @@ export const DataTable = <T,>({
         </Table>
       </TableScroll>
       {renderState()}
-      {pagination && (
-        <Pagination
-          page={pagination.page}
-          onPageChange={pagination.onPageChange}
-          isNextDisabled={
-            pagination.page * pagination.pageSize >= pagination.total
-          }
-        />
-      )}
+      {pagination && <Pagination {...pagination} />}
     </TableWrapper>
   );
 };

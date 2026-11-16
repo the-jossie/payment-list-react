@@ -1,25 +1,20 @@
 import { I18N } from "../../constants/i18n";
+import { hasNextPage, hasPreviousPage } from "../lib/pagination";
 import { PaginationButton, PaginationRow } from "./styles";
 
-interface PaginationProps {
+export interface PaginationProps {
   page: number;
+  pageSize: number;
+  total: number;
   onPageChange: (page: number) => void;
-  isPreviousDisabled?: boolean;
-  isNextDisabled?: boolean;
 }
 
-export const Pagination = ({
-  page,
-  onPageChange,
-  isPreviousDisabled = page <= 1,
-  isNextDisabled = false,
-}: PaginationProps) => (
+export const Pagination = ({ page, pageSize, total, onPageChange }: PaginationProps) => (
   <PaginationRow role="navigation" aria-label={I18N.PAGINATION_LABEL}>
     <PaginationButton
       type="button"
       onClick={() => onPageChange(page - 1)}
-      disabled={isPreviousDisabled}
-      aria-label={I18N.PREVIOUS_BUTTON}
+      disabled={!hasPreviousPage(page)}
     >
       {I18N.PREVIOUS_BUTTON}
     </PaginationButton>
@@ -29,8 +24,7 @@ export const Pagination = ({
     <PaginationButton
       type="button"
       onClick={() => onPageChange(page + 1)}
-      disabled={isNextDisabled}
-      aria-label={I18N.NEXT_BUTTON}
+      disabled={!hasNextPage(page, pageSize, total)}
     >
       {I18N.NEXT_BUTTON}
     </PaginationButton>
