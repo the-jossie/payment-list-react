@@ -62,7 +62,8 @@ export const handlers = [
       const matchesSearch = !search || 
         pay.id.toLowerCase().includes(search) ||
         pay.status?.toLowerCase().includes(search) ||
-        pay.currency?.toLowerCase().includes(search);
+        pay.currency?.toLowerCase().includes(search) ||
+        pay.customerName?.toLowerCase().includes(search);
       
       // Currency filter
       const matchesCurrency = !currency || pay.currency === currency;

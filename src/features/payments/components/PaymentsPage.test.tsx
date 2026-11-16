@@ -152,3 +152,22 @@ describe("PaymentsPage pagination", () => {
     expect(await screen.findByText(`${I18N.PAGE_LABEL} 1`)).toBeInTheDocument();
   });
 });
+
+describe("PaymentsPage search", () => {
+  test("finds payments by customer name, including spaces and any case", async () => {
+    renderPage();
+    await waitForRows();
+
+    fireEvent.change(screen.getByRole("searchbox"), { target: { value: "  alice   GREEN " } });
+    fireEvent.click(screen.getByRole("button", { name: I18N.SEARCH_BUTTON }));
+
+    await waitFor(() => {
+      const customers = screen
+        .getAllByRole("row")
+        .slice(1)
+        .map((row) => within(row).getAllByRole("cell")[3].textContent);
+      expect(customers.length).toBeGreaterThan(0);
+      expect(customers.every((name) => name === "Alice Green")).toBe(true);
+    });
+  });
+});
