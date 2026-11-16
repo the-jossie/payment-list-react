@@ -48,8 +48,8 @@ export const PaymentsSearch = ({
           onChange={(event) => onFiltersChange({ currency: event.target.value })}
         >
           <option value="">{I18N.CURRENCIES_OPTION}</option>
-          {CURRENCIES.map((currency, index) => (
-            <option key={`currency-${index}-${currency}`} value={currency}>
+          {CURRENCIES.map((currency) => (
+            <option key={currency} value={currency}>
               {currency}
             </option>
           ))}

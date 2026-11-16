@@ -23,7 +23,7 @@ export const Pagination = ({
     >
       {I18N.PREVIOUS_BUTTON}
     </PaginationButton>
-    <span aria-live="polite" aria-label={I18N.PAGE_LABEL + " " + page}>
+    <span aria-live="polite">
       {I18N.PAGE_LABEL} {page}
     </span>
     <PaginationButton
