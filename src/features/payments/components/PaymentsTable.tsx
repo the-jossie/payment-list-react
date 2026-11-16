@@ -2,16 +2,13 @@ import { I18N } from "../../../constants/i18n";
 import { Payment } from "../types";
 import { formatAmount, formatDate } from "../../../shared/lib/format";
 import { PaymentStatusBadge } from "./PaymentStatusBadge";
-import {
-  DataTable,
-  TableColumn,
-  TablePagination,
-} from "../../../shared/ui/DataTable";
+import { DataTable, TableColumn } from "../../../shared/ui/DataTable";
+import { PaginationProps } from "../../../shared/ui/Pagination";
 
 interface PaymentsTableProps {
   payments: Payment[];
   isLoading?: boolean;
-  pagination?: TablePagination;
+  pagination?: PaginationProps;
 }
 
 const PAYMENT_COLUMNS: TableColumn<Payment>[] = [

@@ -29,3 +29,9 @@ describe("formatDate", () => {
     expect(formatDate(date)).toBe("31/12/2024, 23:59:59");
   });
 });
+
+describe("formatDate with invalid input", () => {
+  test("returns the original value instead of throwing", () => {
+    expect(formatDate("not-a-date")).toBe("not-a-date");
+  });
+});

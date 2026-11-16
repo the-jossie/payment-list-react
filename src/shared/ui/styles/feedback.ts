@@ -34,6 +34,12 @@ export const Spinner = styled.div`
   }
 `;
 
+export const FieldError = styled.p`
+  margin: -0.5rem 0 1rem;
+  font-size: 0.875rem;
+  color: #b91c1c;
+`;
+
 export const ErrorBox = styled.div`
   padding: 1rem;
   margin-bottom: 1rem;

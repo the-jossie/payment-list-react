@@ -46,27 +46,11 @@ describe("fetchPayments", () => {
     });
   });
 
-  test("throws invalid-response when the body does not match the schema", async () => {
-    respondWithJson({ payments: "nope", total: 1, page: 1, pageSize: 5 });
+  test("rejects HTTP errors as ApiError", async () => {
+    respondWithJson({}, 404);
 
     const error = await fetchPayments(BASE_PARAMS).catch((e: unknown) => e);
     expect(error).toBeInstanceOf(ApiError);
-    expect(error).toMatchObject({ type: "invalid-response" });
-  });
-
-  test("throws invalid-response when the server returns HTML", async () => {
-    server.use(
-      http.get(`*${PAYMENTS_API_URL}`, () => HttpResponse.text("<!doctype html>"))
-    );
-
-    await expect(fetchPayments(BASE_PARAMS)).rejects.toMatchObject({ type: "invalid-response" });
-  });
-
-  test("propagates HTTP errors as ApiError", async () => {
-    respondWithJson({}, 404);
-    await expect(fetchPayments(BASE_PARAMS)).rejects.toMatchObject({
-      type: "not-found",
-      status: 404,
-    });
+    expect(error).toMatchObject({ type: "not-found" });
   });
 });

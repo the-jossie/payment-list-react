@@ -4,7 +4,6 @@ import { ApiErrorType } from "../../shared/api/ApiError";
 const PAYMENTS_ERROR_MESSAGES: Record<ApiErrorType, string> = {
   "not-found": I18N.PAYMENT_NOT_FOUND,
   server: I18N.INTERNAL_SERVER_ERROR,
-  "invalid-response": I18N.SOMETHING_WENT_WRONG,
   unknown: I18N.SOMETHING_WENT_WRONG,
 };
 
