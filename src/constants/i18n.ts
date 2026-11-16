@@ -33,6 +33,7 @@ export const I18N = {
 
   // Messages
   NO_PAYMENTS_FOUND: "No payments found.",
+  LOADING: "Loading payments…",
   PAYMENT_NOT_FOUND: "Payment not found.",
   INTERNAL_SERVER_ERROR: "Internal server error. Please try again later.",
   SOMETHING_WENT_WRONG: "Something went wrong!",
