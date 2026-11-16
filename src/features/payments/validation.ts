@@ -1,14 +1,18 @@
 import { I18N } from "../../constants/i18n";
 import { CURRENCIES } from "./constants";
 
-export const SEARCH_MAX_LENGTH = 50;
-const SEARCH_PATTERN = /^[A-Za-z0-9_-]*$/;
+export const SEARCH_MAX_LENGTH = 100;
 
-export const validateSearch = (value: string): string | null => {
-  const trimmed = value.trim();
-  const isValid = trimmed.length <= SEARCH_MAX_LENGTH && SEARCH_PATTERN.test(trimmed);
-  return isValid ? null : I18N.SEARCH_INVALID;
-};
+const CONTROL_CHARACTERS = /\p{Cc}/gu;
+const WHITESPACE_RUNS = /\s+/g;
+
+export const normalizeSearch = (value: string): string =>
+  value.replace(CONTROL_CHARACTERS, " ").replace(WHITESPACE_RUNS, " ").trim();
+
+export const validateSearch = (value: string): string | null =>
+  Array.from(normalizeSearch(value)).length > SEARCH_MAX_LENGTH
+    ? I18N.SEARCH_TOO_LONG
+    : null;
 
 export const isCurrency = (value: string): boolean =>
   (CURRENCIES as readonly string[]).includes(value);

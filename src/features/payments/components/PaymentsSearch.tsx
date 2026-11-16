@@ -2,7 +2,7 @@ import { FormEvent, useId, useState } from "react";
 import { CURRENCIES } from "../constants";
 import { I18N } from "../../../constants/i18n";
 import { PaymentFilters } from "../types";
-import { isCurrency, validateSearch } from "../validation";
+import { isCurrency, normalizeSearch, validateSearch } from "../validation";
 import {
   ClearButton,
   FieldError,
@@ -39,7 +39,7 @@ export const PaymentsSearch = ({
     setSearchError(error);
     if (error) return;
 
-    onFiltersChange({ search: searchQuery.trim() });
+    onFiltersChange({ search: normalizeSearch(searchQuery) });
   };
 
   const handleSearchChange = (value: string) => {
