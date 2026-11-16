@@ -4,7 +4,6 @@ import { PaymentFilters } from "../types";
 
 const INITIAL_FILTERS: PaymentFilters = {
   search: "",
-  currency: "",
 };
 
 export const usePaymentFilters = () => {

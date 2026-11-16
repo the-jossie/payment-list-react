@@ -1,5 +1,5 @@
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
-import { ApiError } from "../../../shared/api/ApiError";
+import { ApiError, toApiError } from "../../../shared/api/ApiError";
 import { fetchPayments } from "../api/fetchPayments";
 import { PaymentSearchParams, PaymentSearchResponse } from "../types";
 
@@ -11,6 +11,9 @@ export const paymentsKeys = {
 export const usePayments = (params: PaymentSearchParams) =>
   useQuery<PaymentSearchResponse, ApiError>({
     queryKey: paymentsKeys.list(params),
-    queryFn: () => fetchPayments(params),
+    queryFn: () =>
+      fetchPayments(params).catch((error: unknown) => {
+        throw toApiError(error);
+      }),
     placeholderData: keepPreviousData,
   });

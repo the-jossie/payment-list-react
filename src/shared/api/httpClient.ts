@@ -13,5 +13,6 @@ export const httpClient = axios.create();
 
 httpClient.interceptors.response.use(
   (response) => response,
-  (error: unknown) => Promise.reject(new ApiError(getErrorType(error)))
+  (error: unknown) =>
+    Promise.reject(new ApiError(getErrorType(error), { cause: error }))
 );

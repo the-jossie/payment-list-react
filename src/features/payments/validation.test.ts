@@ -1,4 +1,5 @@
-import { describe, expect, test } from "vitest";
+import { describe, expect, expectTypeOf, test } from "vitest";
+import { Currency } from "./types";
 import { I18N } from "../../constants/i18n";
 import {
   isCurrency,
@@ -53,5 +54,15 @@ describe("isCurrency", () => {
     ["", false],
   ])("%j → %s", (value, expected) => {
     expect(isCurrency(value)).toBe(expected);
+  });
+});
+
+describe("isCurrency as a type guard", () => {
+  test("narrows a string to Currency", () => {
+    const value: string = "GBP";
+    if (isCurrency(value)) {
+      expectTypeOf(value).toEqualTypeOf<Currency>();
+    }
+    expect(isCurrency(value)).toBe(true);
   });
 });

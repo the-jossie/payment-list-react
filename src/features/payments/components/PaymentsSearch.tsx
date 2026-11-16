@@ -48,7 +48,7 @@ export const PaymentsSearch = ({
   };
 
   const handleCurrencyChange = (value: string) => {
-    onFiltersChange({ currency: isCurrency(value) ? value : "" });
+    onFiltersChange({ currency: isCurrency(value) ? value : undefined });
   };
 
   const handleClear = () => {
@@ -70,7 +70,7 @@ export const PaymentsSearch = ({
         />
         <Select
           aria-label={I18N.CURRENCY_FILTER_LABEL}
-          value={filters.currency}
+          value={filters.currency ?? ""}
           onChange={(event) => handleCurrencyChange(event.target.value)}
         >
           <option value="">{I18N.CURRENCIES_OPTION}</option>

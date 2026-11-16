@@ -8,7 +8,7 @@ const renderSearch = (searchQuery: string, isClearable = false) => {
   const props = {
     searchQuery,
     onSearchQueryChange: vi.fn(),
-    filters: { search: "", currency: "" },
+    filters: { search: "" },
     onFiltersChange: vi.fn(),
     isClearable,
     onClear: vi.fn(),
@@ -84,6 +84,6 @@ describe("PaymentsSearch validation", () => {
 
     fireEvent.change(select, { target: { value: "XYZ" } });
 
-    expect(props.onFiltersChange).toHaveBeenCalledWith({ currency: "" });
+    expect(props.onFiltersChange).toHaveBeenCalledWith({ currency: undefined });
   });
 });

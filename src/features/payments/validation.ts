@@ -1,5 +1,6 @@
 import { I18N } from "../../constants/i18n";
 import { CURRENCIES } from "./constants";
+import { Currency } from "./types";
 
 export const SEARCH_MAX_LENGTH = 100;
 
@@ -14,5 +15,5 @@ export const validateSearch = (value: string): string | null =>
     ? I18N.SEARCH_TOO_LONG
     : null;
 
-export const isCurrency = (value: string): boolean =>
-  (CURRENCIES as readonly string[]).includes(value);
+export const isCurrency = (value: string): value is Currency =>
+  CURRENCIES.some((currency) => currency === value);

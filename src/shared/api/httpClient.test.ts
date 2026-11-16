@@ -9,6 +9,6 @@ describe("httpClient", () => {
       .catch((e: unknown) => e);
 
     expect(error).toBeInstanceOf(ApiError);
-    expect(error).toMatchObject({ type: "unknown" });
+    expect(error).toMatchObject({ type: "unknown", cause: expect.any(TypeError) });
   });
 });

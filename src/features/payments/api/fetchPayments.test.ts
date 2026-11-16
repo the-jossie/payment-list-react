@@ -1,4 +1,5 @@
 import { afterAll, afterEach, beforeAll, describe, expect, test } from "vitest";
+import { isAxiosError } from "axios";
 import { http, HttpResponse, JsonBodyType } from "msw";
 import { server } from "../../../mocks/node";
 import { ApiError } from "../../../shared/api/ApiError";
@@ -52,5 +53,8 @@ describe("fetchPayments", () => {
     const error = await fetchPayments(BASE_PARAMS).catch((e: unknown) => e);
     expect(error).toBeInstanceOf(ApiError);
     expect(error).toMatchObject({ type: "not-found" });
+
+    const cause = error instanceof ApiError ? error.cause : undefined;
+    expect(isAxiosError(cause) && cause.response?.status).toBe(404);
   });
 });
